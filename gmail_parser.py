@@ -56,20 +56,16 @@ SCOPES = [
 #%%
 def get_credentials():
     creds = None
-    token_path = 'token.pickle'
-
-    if os.path.exists(token_path):
-        with open(token_path, 'rb') as token:
-            creds = pickle.load(token)
+    if 'GMAIL_TOKEN_PICKLE' in os.environ:
+        print("🔐 Loading token from GitHub Secrets")
+        token_bytes = base64.b64decode(os.environ['GMAIL_TOKEN_PICKLE'])
+        creds = pickle.loads(token_bytes)
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=8080)
-        with open(token_path, 'wb') as token:
-            pickle.dump(creds, token)
+            raise RuntimeError("❌ Token is missing or invalid. Run locally to regenerate.")
 
     return creds
 
