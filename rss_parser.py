@@ -19,40 +19,40 @@ rss_urls = [
     'https://www.ecs.org/newsroom/feed/'
 ]
 #%%
-for rss_url in rss_urls:
-    print(f"\n📡 Fetching feed: {rss_url}")
-    feed = feedparser.parse(rss_url)
+# for rss_url in rss_urls:
+#     print(f"\n📡 Fetching feed: {rss_url}")
+#     feed = feedparser.parse(rss_url)
 
-    # Metadata keys
-    print("\n🔎 Feed Metadata Keys:")
-    for key in feed.feed.keys():
-        print("-", key)
+#     # Metadata keys
+#     print("\n🔎 Feed Metadata Keys:")
+#     for key in feed.feed.keys():
+#         print("-", key)
 
-    # Metadata content
-    print("\n📘 Feed Metadata Values:")
-    for key, value in feed.feed.items():
-        print(f"{key}: {value}")
+#     # Metadata content
+#     print("\n📘 Feed Metadata Values:")
+#     for key, value in feed.feed.items():
+#         print(f"{key}: {value}")
 
-    print("\n📰 Total Entries:", len(feed.entries))
+#     print("\n📰 Total Entries:", len(feed.entries))
 
-    # Shows all available entries 
-    for entry in feed.entries[:1]:
-        print(entry.keys()) 
+#     # Shows all available entries 
+#     for entry in feed.entries[:1]:
+#         print(entry.keys()) 
 
-    #Loop through top entries
-    for i, entry in enumerate(feed.entries[:5]):
-        print(f"\n📄 Entry {i+1}:")
-        print("Title:", entry.get("title", "N/A"))
-        print("Link:", entry.get("link", "N/A"))
-        print("Published:", entry.get("published", "N/A"))
-        print("Summary:", entry.get("summary", "N/A"))
-        if 'tags' in entry:
-            print("Tags:", [tag.get("term", "N/A") for tag in entry.tags])
-        else:
-            print("Tags: None found")
+#     #Loop through top entries
+#     for i, entry in enumerate(feed.entries[:5]):
+#         print(f"\n📄 Entry {i+1}:")
+#         print("Title:", entry.get("title", "N/A"))
+#         print("Link:", entry.get("link", "N/A"))
+#         print("Published:", entry.get("published", "N/A"))
+#         print("Summary:", entry.get("summary", "N/A"))
+#         if 'tags' in entry:
+#             print("Tags:", [tag.get("term", "N/A") for tag in entry.tags])
+#         else:
+#             print("Tags: None found")
 
         
-print("\n✅ All RSS feeds parsed successfully.")
+# print("\n✅ All RSS feeds parsed successfully.")
 #%%
 # The 74
 '''dict_keys(['title', 'title_detail', 'links', 'link', 'authors', 'author', 'author_detail', 'published', 'published_parsed', 'tags', 'id', 'guidislink', 'summary', 'summary_detail', 'content'])'''
