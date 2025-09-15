@@ -2,4 +2,6 @@ google-api-python-client
 google-auth
 google-auth-oauthlib
 polars
-torch
+feedparser
+transformers
+beautifulsoup4
