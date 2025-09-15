@@ -1,9 +1,10 @@
 name: Weekly Digest Sender
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 14 * * 1'  # Every Monday at 8 AM MDT (14:00 UTC)
-  workflow_dispatch:
+  
 
 jobs:
   send-digest:
