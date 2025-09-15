@@ -1,0 +1,20 @@
+name: Weekly Digest Sender
+
+on:
+  schedule:
+    - cron: '0 14 * * 1'  # Every Monday at 8 AM MDT (14:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: python send_digest.py
+        env:
+          GMAIL_TOKEN_PICKLE: ${{ secrets.GMAIL_TOKEN_PICKLE }}
+
