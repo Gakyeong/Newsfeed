@@ -8,21 +8,13 @@ on:
 jobs:
   send-digest:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run digest script
-        run: python send_digest.py
+      - run: pip install -r requirements.txt
+      - run: python send_digest.py
         env:
-          GMAIL_SERVICE_KEY: ${{ secrets.GMAIL_SERVICE_KEY }}
+          GMAIL_TOKEN_PICKLE: ${{ secrets.GMAIL_TOKEN_PICKLE }}
 

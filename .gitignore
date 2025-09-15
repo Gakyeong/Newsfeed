@@ -1,5 +1,6 @@
 # Ignore service account credentials
 credentials.json
+token.pickle
 
 # Ignore Python cache and logs
 __pycache__/

@@ -6,7 +6,6 @@ import pickle
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from google.oauth2 import service_account
 import base64
 from bs4 import BeautifulSoup
 from rss_parser import get_last_week_range
@@ -44,31 +43,36 @@ import json
 #             pickle.dump(creds, token)
 
 #     return creds
+#%%
+# with open('token.pickle', 'rb') as f:
+#     encoded = base64.b64encode(f.read()).decode('utf-8')
+#     print(encoded)
 
 #%% Authorization - service account 
 SCOPES = [
     'https://www.googleapis.com/auth/gmail.readonly',
     'https://www.googleapis.com/auth/gmail.send'
 ]
-
+#%%
 def get_credentials():
-    gmail_user = 'edtechnews.curator@gmail.com'
+    creds = None
+    token_path = 'token.pickle'
 
-    if 'GMAIL_SERVICE_KEY' in os.environ:
-        # Running in GitHub Actions
-        print("🔐 Using GMAIL_SERVICE_KEY from environment")
-        service_key = json.loads(os.environ['GMAIL_SERVICE_KEY'])
-    else:
-        # Running locally
-        print("📁 Using credentials.json from local file")
-        with open('credentials.json') as f:
-            service_key = json.load(f)
+    if os.path.exists(token_path):
+        with open(token_path, 'rb') as token:
+            creds = pickle.load(token)
 
-    credentials = service_account.Credentials.from_service_account_info(
-        service_key, scopes=SCOPES
-    ).with_subject(gmail_user)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=8080)
+        with open(token_path, 'wb') as token:
+            pickle.dump(creds, token)
 
-    return credentials
+    return creds
+
 # %% service : Builds Gmail API service object
 def get_gmail_service():
     creds = get_credentials()

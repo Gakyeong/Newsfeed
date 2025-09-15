@@ -177,5 +177,4 @@ if __name__ == '__main__':
     html_content = format_digest_as_html(digest)
     send_digest_email(html_content)
 
-
 # %%
