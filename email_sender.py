@@ -95,7 +95,7 @@ def send_message(service, user_id, message):
 def send_digest_email(html_content):
     service = get_gmail_service()
 
-    message = create_message("edtechnews.curator@gmail.com", "edtechnews.curator@gmail.com",  "Weekly Education Digest", html_content)
+    message = create_message("edtechnews.curator@gmail.com", "market.research@imaginelearning.com",  "Weekly Education Digest", html_content)
     response = send_message(service, "me", message)
     print("✅ Email sent. Message ID:", response['id'])
 #%%
